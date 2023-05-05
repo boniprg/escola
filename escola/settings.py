@@ -13,6 +13,7 @@ Token: d0b2b2ebc36fe153c0d9d7405016432f2cc42d1a
 
 """
 import os
+import dj_database_url
 
 from pathlib import Path
 
@@ -25,6 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = 'django-insecure-%pp_(f%()&=tc_7hosv_+_axxt%^g2^u8r5fga_ynwnfbbqu*s'
+# postgresql://postgres:l8zK0pMej3w8OhAGvsIJ@containers-us-west-160.railway.app:8027/railway
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -86,12 +88,20 @@ WSGI_APPLICATION = 'escola.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+'''
+
+
+DATABASES = {
+    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600),
+}
+
 
 
 # Password validation
